@@ -1,6 +1,12 @@
 class PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
+    @comment = Comment.new
+    @comment_users = {}
+    @post.comments.each do |comment|
+      @comment_users[comment.user] = @comment_users[comment.user] || []
+      @comment_users[comment.user] << comment.content
+    end
   end
 
   def index
